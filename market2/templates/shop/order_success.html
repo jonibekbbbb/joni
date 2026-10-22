@@ -1,0 +1,12 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+{% block title %}Buyurtma qabul qilindi — Market{% endblock %}
+{% block page_css %}<link rel="stylesheet" href="{% static 'css/order_success.css' %}">{% endblock %}
+{% block content %}
+<section class="panel success-panel">
+    <h1>Buyurtmangiz qabul qilindi</h1>
+    <p>Buyurtma raqami: #{{ order.id }}</p>
+    <p>Jami: {{ order.total_price }} so'm</p>
+    <a class="btn btn--primary" href="{% url 'home' %}">Bosh sahifaga qaytish</a>
+</section>
+{% endblock %}

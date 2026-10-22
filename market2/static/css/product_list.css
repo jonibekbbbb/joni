@@ -1,0 +1,30 @@
+.catalog {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 22px;
+}
+
+.catalog__sidebar,
+.catalog__main {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    padding: 18px;
+}
+
+.cat-list {
+    list-style: none;
+    padding: 0;
+    line-height: 2;
+}
+
+.filters input,
+.filters select {
+    width: 100%;
+}
+
+@media (max-width: 700px) {
+    .catalog {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,13 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+{% block title %}To'lov — Market{% endblock %}
+{% block page_css %}<link rel="stylesheet" href="{% static 'css/payment.css' %}">{% endblock %}
+{% block content %}
+<section class="panel payment-summary">
+    <h1>Buyurtma #{{ order.id }} uchun to'lov</h1>
+    <p>To'lov usuli: {{ order.get_payment_method_display }}</p>
+    <p>To'lanadigan summa: {{ order.total_price }} so'm</p>
+    <p>To'lovni yakunlash uchun buyurtmadagi to'lov usuli ko'rsatmalariga amal qiling.</p>
+    <a href="{% url 'order_detail' order.id %}">Buyurtmaga qaytish</a>
+</section>
+{% endblock %}

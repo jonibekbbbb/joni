@@ -1,0 +1,22 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+{% block title %}Savat — Market{% endblock %}
+{% block page_css %}<link rel="stylesheet" href="{% static 'css/cart.css' %}">{% endblock %}
+{% block content %}
+<section class="panel">
+    <h1>Savatingiz</h1>
+    {% for item in cart %}
+        <div class="cart-item">
+            <a href="{% url 'product_detail' item.product.slug %}">{{ item.product.name }}</a>
+            <p>{{ item.quantity }} × {{ item.price }} = {{ item.total }} so'm</p>
+            <form method="post" action="{% url 'cart_remove' item.product.id %}">
+                {% csrf_token %}<button class="btn" type="submit">O'chirish</button>
+            </form>
+        </div>
+    {% empty %}
+        <p>Savatingiz hozircha bo'sh.</p>
+    {% endfor %}
+    <h2 class="cart-total">Jami: {{ total }} so'm</h2>
+    {% if cart %}<a class="btn btn--primary" href="{% url 'checkout' %}">Buyurtmani rasmiylashtirish</a>{% endif %}
+</section>
+{% endblock %}

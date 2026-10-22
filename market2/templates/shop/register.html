@@ -1,0 +1,16 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+{% block title %}Ro'yxatdan o'tish — Market{% endblock %}
+{% block page_css %}<link rel="stylesheet" href="{% static 'css/register.css' %}">{% endblock %}
+{% block content %}
+<section class="panel auth-panel">
+    <h1>Yangi hisob ochish</h1>
+    <p class="muted">Ma'lumotlaringizni kiriting va ro'yxatdan o'ting.</p>
+    <form method="post">
+        {% csrf_token %}
+        {% include 'includes/form_fields.html' %}
+        <button class="btn btn--primary btn--block" type="submit">Hisob yaratish</button>
+    </form>
+    <p>Hisobingiz bormi? <a href="{% url 'login' %}">Kirish</a></p>
+</section>
+{% endblock %}

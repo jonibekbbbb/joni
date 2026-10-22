@@ -1,0 +1,17 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+{% block title %}Kirish — Market{% endblock %}
+{% block page_css %}<link rel="stylesheet" href="{% static 'css/login.css' %}">{% endblock %}
+{% block content %}
+<section class="panel auth-panel">
+    <h1>Hisobingizga kiring</h1>
+    <p class="muted">Buyurtmalaringizni ko'rish va xarid qilish uchun tizimga kiring.</p>
+    <form method="post">
+        {% csrf_token %}
+        {% include 'includes/form_fields.html' %}
+        <input type="hidden" name="next" value="{{ next }}">
+        <button class="btn btn--primary btn--block" type="submit">Kirish</button>
+    </form>
+    <p>Hisobingiz yo'qmi? <a href="{% url 'register' %}">Ro'yxatdan o'ting</a></p>
+</section>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+{% block title %}Buyurtma #{{ order.id }} — Market{% endblock %}
+{% block page_css %}<link rel="stylesheet" href="{% static 'css/order_detail.css' %}">{% endblock %}
+{% block content %}
+<section class="panel">
+    <h1>Buyurtma #{{ order.id }}</h1>
+    <p>Holati: {{ order.get_status_display }}</p>
+    <p>Jami: {{ order.total_price }} so'm</p>
+    <p>Qabul qiluvchi: {{ order.full_name }}</p>
+    <p>Telefon: {{ order.phone }}</p>
+    <p>Manzil: {{ order.address }}</p>
+    <h2>Mahsulotlar</h2>
+    <ul class="order-items">{% for item in order.items.all %}<li>{{ item.product_name }} — {{ item.quantity }} × {{ item.price }} = {{ item.total }} so'm</li>{% endfor %}</ul>
+    <a href="{% url 'profile' %}">Profilga qaytish</a>
+</section>
+{% endblock %}

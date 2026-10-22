@@ -1,0 +1,61 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+{% block title %}Bosh sahifa — Market{% endblock %}
+{% block page_css %}<link rel="stylesheet" href="{% static 'css/home.css' %}">{% endblock %}
+{% block content %}
+    <section class="home-hero">
+        <div class="home-hero__content">
+            <span class="eyebrow">Yangi xarid tajribasi</span>
+            <h1>Yaxshi tanlov,<br><span>yaxshi kayfiyat.</span></h1>
+            <p>O'zingizga kerakli mahsulotlarni qulay toping va bir necha qadamda buyurtma bering.</p>
+            <a class="btn btn--primary home-hero__button" href="{% url 'product_list' %}">Katalogni ko'rish <span aria-hidden="true">&rarr;</span></a>
+        </div>
+        <div class="home-hero__art" aria-hidden="true">
+            <span class="hero-orbit hero-orbit--one"></span>
+            <span class="hero-orbit hero-orbit--two"></span>
+            <span class="hero-bag"><span class="hero-bag__handle"></span><span class="hero-bag__mark">M</span></span>
+            <span class="hero-spark hero-spark--one">+</span>
+            <span class="hero-spark hero-spark--two">&bull;</span>
+        </div>
+    </section>
+    <section class="home-section">
+        <div class="section-heading">
+            <div><span class="eyebrow">Tanlanganlar</span><h2>Yangi mahsulotlar</h2></div>
+            <a class="section-link" href="{% url 'product_list' %}">Barchasini ko'rish <span aria-hidden="true">&rarr;</span></a>
+        </div>
+        <div class="products">
+            {% for product in new_products %}
+                {% include 'includes/product_card.html' %}
+            {% empty %}
+                <p class="muted">Hozircha mahsulot yo'q.</p>
+            {% endfor %}
+        </div>
+    </section>
+    <section class="home-section">
+        <div class="section-heading">
+            <div><span class="eyebrow">Ajoyib takliflar</span><h2>Chegirmadagi mahsulotlar</h2></div>
+            <a class="section-link" href="{% url 'product_list' %}">Katalogga o'tish <span aria-hidden="true">&rarr;</span></a>
+        </div>
+        <div class="products">
+            {% for product in sale_products %}
+                {% include 'includes/product_card.html' %}
+            {% empty %}
+                <p class="muted">Chegirmadagi mahsulot yo'q.</p>
+            {% endfor %}
+        </div>
+    </section>
+    <section class="home-section category-section">
+        <div class="section-heading">
+            <div><span class="eyebrow">Oson toping</span><h2>Kategoriyalar</h2></div>
+        </div>
+        <div class="category-grid">
+            {% for category in categories %}
+                <a class="category-tile" href="{% url 'category_products' category.slug %}">
+                    <span>{{ category.name }}</span><span class="category-tile__arrow" aria-hidden="true">&rarr;</span>
+                </a>
+            {% empty %}
+                <p class="muted">Kategoriyalar mavjud emas.</p>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}

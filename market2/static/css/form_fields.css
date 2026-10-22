@@ -1,0 +1,32 @@
+.form__group {
+    margin: 0 0 16px;
+}
+
+.form__group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+.form__group input,
+.form__group textarea,
+.form__group select {
+    width: 100%;
+    max-width: 100%;
+    padding: 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font: inherit;
+}
+
+.error,
+.alert--error {
+    display: block;
+    color: #b91c1c;
+    margin-top: 5px;
+}
+
+.help {
+    color: #6b7280;
+    font-size: .92rem;
+}

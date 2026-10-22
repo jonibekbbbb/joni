@@ -1,0 +1,42 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+{% block title %}{{ product.name }} — Market{% endblock %}
+{% block page_css %}<link rel="stylesheet" href="{% static 'css/product_detail.css' %}">{% endblock %}
+{% block content %}
+<p class="detail-back"><a href="{% url 'product_list' %}"><span aria-hidden="true">&larr;</span> Katalogga qaytish</a></p>
+<section class="product-detail">
+    <div class="product-detail__gallery">
+        {% for image in product.images.all %}
+            <div class="product-detail__image-wrap"><img class="product-detail__image" src="{{ image.image.url }}" alt="{{ product.name }}"></div>
+        {% empty %}
+            <div class="product-detail__image-wrap product-detail__placeholder"><span>Rasm mavjud emas</span></div>
+        {% endfor %}
+    </div>
+    <div class="product-detail__info">
+        <span class="eyebrow">{{ product.category.name }}</span>
+        <h1>{{ product.name }}</h1>
+        <div class="product-detail__price">
+            <strong>{{ product.final_price }} <span>so'm</span></strong>
+            {% if product.discount_price %}<s>{{ product.price }} so'm</s>{% endif %}
+        </div>
+        <p class="product-detail__stock">{% if product.stock %}<span class="stock-dot"></span> Omborda mavjud{% else %}<span class="stock-dot stock-dot--out"></span> Hozircha mavjud emas{% endif %}</p>
+        {% if product.description %}<div class="product-detail__description">{{ product.description|linebreaks }}</div>{% endif %}
+        {% if product.stock %}
+            <form class="product-detail__form" method="post" action="{% url 'cart_add' product.id %}">
+                {% csrf_token %}
+                <label for="quantity">Miqdor</label>
+                <div class="product-detail__actions">
+                    <input id="quantity" type="number" name="quantity" min="1" max="{{ product.stock }}" value="1">
+                    <button class="btn btn--primary" type="submit">Savatga qo'shish <span aria-hidden="true">&rarr;</span></button>
+                </div>
+            </form>
+        {% endif %}
+    </div>
+</section>
+{% if related %}
+<section class="home-section related-section">
+    <div class="section-heading"><div><span class="eyebrow">Siz uchun</span><h2>O'xshash mahsulotlar</h2></div></div>
+    <div class="products">{% for product in related %}{% include 'includes/product_card.html' %}{% endfor %}</div>
+</section>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+{% block title %}Profil — Market{% endblock %}
+{% block page_css %}<link rel="stylesheet" href="{% static 'css/profile.css' %}">{% endblock %}
+{% block content %}
+<section class="panel">
+    <h1>Mening profilim</h1>
+    <form method="post">
+        {% csrf_token %}
+        {% include 'includes/form_fields.html' %}
+        <button class="btn btn--primary" type="submit">Ma'lumotlarni saqlash</button>
+    </form>
+</section>
+<section class="panel">
+    <h2>Buyurtmalarim</h2>
+    {% for order in orders %}
+        <div class="profile-order">
+            <a href="{% url 'order_detail' order.id %}">Buyurtma #{{ order.id }}</a>
+            — {{ order.total_price }} so'm — {{ order.get_status_display }}
+            {% if not order.is_paid %} · <a href="{% url 'payment' order.id %}">To'lov ma'lumoti</a>{% endif %}
+        </div>
+    {% empty %}
+        <p>Hali buyurtma yo'q.</p>
+    {% endfor %}
+</section>
+{% endblock %}

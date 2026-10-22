@@ -1,0 +1,41 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+{% block title %}{% if category %}{{ category.name }}{% else %}Katalog{% endif %} — Market{% endblock %}
+{% block page_css %}<link rel="stylesheet" href="{% static 'css/product_list.css' %}">{% endblock %}
+{% block content %}
+<div class="catalog">
+    <aside class="catalog__sidebar">
+        <h2>Kategoriyalar</h2>
+        <ul class="cat-list">
+            <li><a href="{% url 'product_list' %}">Barcha mahsulotlar</a></li>
+            {% for item in categories %}
+                <li><a href="{% url 'category_products' item.slug %}">{{ item.name }}</a></li>
+            {% endfor %}
+        </ul>
+        <form method="get" action="{{ request.path }}" class="filters">
+            <input type="search" name="q" value="{{ query }}" placeholder="Mahsulot qidirish">
+            <p><label>Eng arzon narx<br><input type="number" name="min" min="0" step="0.01" value="{{ min_price }}"></label></p>
+            <p><label>Eng qimmat narx<br><input type="number" name="max" min="0" step="0.01" value="{{ max_price }}"></label></p>
+            <p><label>Saralash<br>
+                <select name="sort">
+                    <option value="new" {% if sort == 'new' or not sort %}selected{% endif %}>Yangilari</option>
+                    <option value="cheap" {% if sort == 'cheap' %}selected{% endif %}>Arzonroq</option>
+                    <option value="expensive" {% if sort == 'expensive' %}selected{% endif %}>Qimmatroq</option>
+                </select>
+            </label></p>
+            <button class="btn btn--primary btn--block" type="submit">Qidirish</button>
+        </form>
+    </aside>
+    <section class="catalog__main">
+        <h1>{% if category %}{{ category.name }}{% else %}Mahsulotlar{% endif %}</h1>
+        <div class="products">
+            {% for product in page_obj %}
+                {% include 'includes/product_card.html' %}
+            {% empty %}
+                <p class="muted">Mahsulot topilmadi.</p>
+            {% endfor %}
+        </div>
+        {% include 'includes/pagination.html' %}
+    </section>
+</div>
+{% endblock %}

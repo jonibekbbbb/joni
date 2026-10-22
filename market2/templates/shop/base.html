@@ -1,0 +1,56 @@
+<!doctype html>
+{% load static %}
+<html lang="uz">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Market{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/product_card.css' %}">
+    <link rel="stylesheet" href="{% static 'css/form_fields.css' %}">
+    <link rel="stylesheet" href="{% static 'css/pagination.css' %}">
+    {% block page_css %}{% endblock %}
+</head>
+<body>
+    <div class="announcement">
+        <div class="wrap announcement__inner">
+            <span>Har kun uchun qulay xaridlar</span>
+            <span>Buyurtmalar tez va ishonchli yetkaziladi</span>
+        </div>
+    </div>
+    <header class="header">
+        <div class="wrap header__inner">
+            <a class="brand" href="{% url 'home' %}" aria-label="Market bosh sahifasi">
+                <span class="brand__mark">M</span>
+                <span>market<span class="brand__dot">.</span></span>
+            </a>
+            <nav class="nav" aria-label="Asosiy menyu">
+                <a href="{% url 'product_list' %}">Katalog</a>
+                <a href="{% url 'cart_detail' %}">Savat</a>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'profile' %}">Profil</a>
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}<button type="submit">Chiqish</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'login' %}">Kirish</a>
+                    <a class="btn btn--primary" href="{% url 'register' %}">Ro'yxatdan o'tish</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+    <main class="wrap">
+        {% if messages %}
+            {% for message in messages %}<div class="message">{{ message }}</div>{% endfor %}
+        {% endif %}
+        {% block content %}{% endblock %}
+    </main>
+    <footer class="footer">
+        <div class="wrap footer__inner">
+            <a class="brand brand--footer" href="{% url 'home' %}"><span class="brand__mark">M</span><span>market<span class="brand__dot">.</span></span></a>
+            <p>Siz izlagan mahsulotlar — bir joyda.</p>
+            <span class="footer__copy">&copy; Market</span>
+        </div>
+    </footer>
+</body>
+</html>
